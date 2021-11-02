@@ -13,12 +13,26 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 
-	struct ball {
+	class Ball {
+	public:
 		int radius;
-		float x;
-		float y;
-		float velocity;
+
+		double x;
+		double y;
+
+		double vx;
+		double vy;
+
+		double ax;
+		double ay;
+
+		double fx;
+		double fy;
+
+		double mass;
 	};
+
+	float fps = 30;
 
 private:
 
