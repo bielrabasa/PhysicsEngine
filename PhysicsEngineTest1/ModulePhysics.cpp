@@ -16,7 +16,8 @@ bool ModulePhysics::Start()
 {
 	LOG("Creating Physics 2D environment");
 
-
+	ball* cannonball = new ball;
+	
 	return true;
 }
 

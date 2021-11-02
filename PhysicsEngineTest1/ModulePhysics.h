@@ -13,6 +13,13 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 
+	struct ball {
+		int radius;
+		float x;
+		float y;
+		float velocity;
+	};
+
 private:
 
 	bool debug;
