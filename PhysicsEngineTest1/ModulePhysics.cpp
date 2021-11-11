@@ -16,15 +16,16 @@ bool ModulePhysics::Start()
 {
 	LOG("Creating Physics 2D environment");
 
-	Ball* ball = new Ball;
-	
+	balls.add(CreateBall(100, 100, 50));
+
 	return true;
 }
 
 
 update_status ModulePhysics::PreUpdate()
 {
-
+	App->renderer->DrawCircle(balls.getLast()->data->x, balls.getLast()->data->y, balls.getLast()->data->radius, 250, 250, 250);
+	App->renderer->DrawCircle(200, 200, 10, 250, 250, 250);
 
 	return UPDATE_CONTINUE;
 }

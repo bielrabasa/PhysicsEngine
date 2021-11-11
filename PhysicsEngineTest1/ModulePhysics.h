@@ -33,7 +33,7 @@ public:
 
 		double mass = 1;
 
-		Ball(double ix, double iy, double rad, double vel, double ang, double m){
+		Ball(double ix, double iy, double rad, double vel, double ang, double m) {
 			x = ix;
 			y = iy;
 			v = vel;
@@ -41,16 +41,16 @@ public:
 			angle = ang;
 			radius = rad;
 		}
-
 		~Ball() {
-
 		}
 	};
 
 	float fps = 30;
 
-	Ball CreateBall(double ix, double iy, double rad, double vel, double ang, double m) {
-		Ball b(ix, iy, rad, vel, ang, m);
+	p2List<Ball*> balls;
+
+	Ball* CreateBall(double ix, double iy, double rad, double vel = 0, double ang = 0, double m = 1) {
+		Ball* b = new Ball(ix, iy, rad, vel, ang, m);
 		return b;
 	}
 
