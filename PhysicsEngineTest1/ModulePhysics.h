@@ -16,23 +16,43 @@ public:
 	class Ball {
 	public:
 		int radius;
+		int angle;
 
-		double x;
-		double y;
+		double x = 0;
+		double y = 0;
 
-		double vx;
-		double vy;
+		double v = 0;
+		double vx = 0;
+		double vy = 0;
 
-		double ax;
-		double ay;
+		double ax = 0;
+		double ay = 0;
 
-		double fx;
-		double fy;
+		double fx = 0;
+		double fy = 0;
 
-		double mass;
+		double mass = 1;
+
+		Ball(double ix, double iy, double rad, double vel, double ang, double m){
+			x = ix;
+			y = iy;
+			v = vel;
+			mass = m;
+			angle = ang;
+			radius = rad;
+		}
+
+		~Ball() {
+
+		}
 	};
 
 	float fps = 30;
+
+	Ball CreateBall(double ix, double iy, double rad, double vel, double ang, double m) {
+		Ball b(ix, iy, rad, vel, ang, m);
+		return b;
+	}
 
 private:
 
