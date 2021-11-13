@@ -2,6 +2,8 @@
 #include "Module.h"
 #include "Globals.h"
 
+#define FPS 30
+
 class ModulePhysics : public Module
 {
 public:
@@ -10,6 +12,7 @@ public:
 
 	bool Start();
 	update_status PreUpdate();
+	update_status Update();
 	update_status PostUpdate();
 	bool CleanUp();
 
@@ -31,30 +34,47 @@ public:
 		double fx = 0;
 		double fy = 0;
 
-		double mass = 1;
+		double fgx = 0;
+		double fgy = 0;
 
-		Ball(double ix, double iy, double rad, double vel, double ang, double m) {
-			x = ix;
-			y = iy;
-			v = vel;
-			mass = m;
-			angle = ang;
-			radius = rad;
+		double mass = 1;
+		double rc = 0;	//restitution coeficient
+		double dc = 0;	//drag coeficient
+
+		bool physics_enabled = true;
+
+		Ball(double x, double y, int radius, double v, int angle, double mass, double rc) {
+			this->x = x;
+			this->y = y;
+			this->v = v;
+			this->mass = mass;
+			this->angle = angle;
+			this->radius = radius;
+			this->rc = rc;
 		}
 		~Ball() {
 		}
 	};
 
-	float fps = 30;
+	float dt = 1.0f / FPS;
 
 	p2List<Ball*> balls;
 
-	Ball* CreateBall(double ix, double iy, double rad, double vel = 0, double ang = 0, double m = 1) {
-		Ball* b = new Ball(ix, iy, rad, vel, ang, m);
+	//crea una bola i la posa a la llista
+	Ball* CreateBall(double x, double y, int radius, double v = 0, int angle = 0, double mass = 1, double rc = 0) {
+		Ball* b = new Ball(x, y, radius, v, angle, mass, rc);
+		balls.add(b);
 		return b;
 	}
 
 private:
-
+	void DrawBalls();
+	void ResetForces(Ball*);
+	void ComputeForces(Ball*);
+	void NewtonsLaw(Ball*);
+	void Integrator(Ball*);
+	void CollisionSolver(Ball*);
+	
 	bool debug;
+	enum class integrators{ VERLET, EULER_BACK, EULER_FORW }integrator_type = integrators::VERLET;
 };
