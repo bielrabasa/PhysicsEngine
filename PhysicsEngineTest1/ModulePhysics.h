@@ -3,6 +3,8 @@
 #include "Globals.h"
 
 #define FPS 30
+#define GRAVITY_X 0
+#define GRAVITY_Y 10
 
 class ModulePhysics : public Module
 {
@@ -19,12 +21,10 @@ public:
 	class Ball {
 	public:
 		int radius;
-		int angle;
 
 		double x = 0;
 		double y = 0;
 
-		double v = 0;
 		double vx = 0;
 		double vy = 0;
 
@@ -46,9 +46,9 @@ public:
 		Ball(double x, double y, int radius, double v, int angle, double mass, double rc) {
 			this->x = x;
 			this->y = y;
-			this->v = v;
+			this->vx = v * cos(-angle * DEGTORAD);
+			this->vy = v * sin(-angle * DEGTORAD);
 			this->mass = mass;
-			this->angle = angle;
 			this->radius = radius;
 			this->rc = rc;
 		}

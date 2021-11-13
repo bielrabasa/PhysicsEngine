@@ -3,9 +3,6 @@
 #include "ModulePhysics.h"
 #include "math.h"
 
-#define GRAVITY_X 0
-#define GRAVITY_Y 10
-
 ModulePhysics::ModulePhysics(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	debug = true;
@@ -31,7 +28,7 @@ update_status ModulePhysics::PreUpdate()
 update_status ModulePhysics::Update()
 {
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
-		CreateBall(200, 100, 10, 0, 5);
+		CreateBall(100, 700, 10, 100, 90, 5);
 
 	}
 
