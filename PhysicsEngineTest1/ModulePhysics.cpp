@@ -27,10 +27,11 @@ update_status ModulePhysics::PreUpdate()
 
 update_status ModulePhysics::Update()
 {
+	/*
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
 		CreateBall(100, 700, 10, 100, 90, 5);
 	}
-
+	*/
 	return UPDATE_CONTINUE;
 }
 

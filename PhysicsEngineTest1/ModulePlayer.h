@@ -12,8 +12,12 @@ public:
 
 	bool Start();
 	update_status Update();
+	update_status PostUpdate();
 	bool CleanUp();
 
-public:
-
+private:
+	int x = 100;
+	int y = 600;
+	int ang = 0;
+	int v = 0;
 };
