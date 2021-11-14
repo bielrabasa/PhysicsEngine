@@ -16,8 +16,10 @@ public:
 	bool CleanUp();
 
 private:
-	int x = 100;
-	int y = 600;
+	double x = 50;
+	double y = 620;
 	int ang = 0;
-	int v = 0;
+	double v = 100;
+	SDL_Texture* cannon_texture = nullptr;
+	SDL_Texture* cannon_base_texture = nullptr;
 };

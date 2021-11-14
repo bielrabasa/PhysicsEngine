@@ -77,4 +77,5 @@ private:
 	
 	bool debug;
 	enum class integrators{ VERLET, EULER_BACK, EULER_FORW }integrator_type = integrators::VERLET;
+	SDL_Texture* cannon_ball_texture = nullptr;
 };

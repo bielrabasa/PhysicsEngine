@@ -15,6 +15,7 @@ ModulePhysics::~ModulePhysics()
 bool ModulePhysics::Start()
 {
 	LOG("Creating Physics 2D environment");
+	cannon_ball_texture = App->textures->Load("Assets/cannon_ball.png");
 
 	return true;
 }
@@ -115,7 +116,8 @@ void ModulePhysics::CollisionSolver(Ball* ball) {
 void ModulePhysics::DrawBalls() {
 	p2List_item<Ball*>* current_ball = balls.getFirst();
 	while (current_ball != NULL) {
-		App->renderer->DrawCircle(current_ball->data->x, current_ball->data->y, current_ball->data->radius, 250, 250, 250);
+		App->renderer->Blit(cannon_ball_texture, current_ball->data->x - 16, current_ball->data->y - 16, NULL, 2);
+		//App->renderer->DrawCircle(current_ball->data->x, current_ball->data->y, current_ball->data->radius, 250, 250, 250);
 		current_ball = current_ball->next;
 	}
 }
