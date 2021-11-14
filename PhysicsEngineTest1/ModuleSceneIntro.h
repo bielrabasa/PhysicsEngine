@@ -18,5 +18,5 @@ public:
 	bool CleanUp();
 
 public:
-
+	int floor = 700;
 };

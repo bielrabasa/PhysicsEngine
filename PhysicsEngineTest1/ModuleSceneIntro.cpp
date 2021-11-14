@@ -34,7 +34,8 @@ bool ModuleSceneIntro::CleanUp()
 // Update: draw background
 update_status ModuleSceneIntro::Update()
 {
-	
+	SDL_Rect floor_rect = { 0, floor, 1024, 60 };
+	App->renderer->DrawQuad(floor_rect, 0, 200, 250);
 
 	return UPDATE_CONTINUE;
 }
