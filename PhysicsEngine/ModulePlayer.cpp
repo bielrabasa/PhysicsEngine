@@ -40,6 +40,7 @@ update_status ModulePlayer::Update()
 			ang += 2;
 	}
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) {
+		//for(int i=0;i<30;i++)		//Prova de matar les fisiques
 		App->physics->CreateBall(x + 32, y + 32, 16, v, ang, 1);
 	}
 	

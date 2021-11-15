@@ -50,7 +50,7 @@ update_status ModulePhysics::PostUpdate()
 		current_ball = current_ball->next;
 	}
 
-	//DeleteBalls();
+	DeleteBalls();
 	DrawBalls();
 
 	//Debug
@@ -118,9 +118,10 @@ void ModulePhysics::DeleteBalls() {
 	p2List_item<Ball*>* current_ball = balls.getFirst();
 	while (current_ball != NULL) {
 		if (current_ball->data->y > 700) {
+			Ball* b = current_ball->data;
 			current_ball = current_ball->next;
-			//delete current_ball->prev->data;
-			//balls.del(current_ball->prev);
+			balls.del(balls.findNode(b));
+			delete b;
 		}
 		else {
 			current_ball = current_ball->next;
