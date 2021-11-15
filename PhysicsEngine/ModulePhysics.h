@@ -69,6 +69,8 @@ public:
 
 private:
 	void DrawBalls();
+	void DeleteBalls();
+
 	void ResetForces(Ball*);
 	void ComputeForces(Ball*);
 	void NewtonsLaw(Ball*);

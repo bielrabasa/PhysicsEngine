@@ -50,6 +50,7 @@ update_status ModulePhysics::PostUpdate()
 		current_ball = current_ball->next;
 	}
 
+	//DeleteBalls();
 	DrawBalls();
 
 	//Debug
@@ -111,6 +112,20 @@ void ModulePhysics::Integrator(Ball* ball) {
 
 void ModulePhysics::CollisionSolver(Ball* ball) {
 
+}
+
+void ModulePhysics::DeleteBalls() {
+	p2List_item<Ball*>* current_ball = balls.getFirst();
+	while (current_ball != NULL) {
+		if (current_ball->data->y > 700) {
+			current_ball = current_ball->next;
+			//delete current_ball->prev->data;
+			//balls.del(current_ball->prev);
+		}
+		else {
+			current_ball = current_ball->next;
+		}
+	}
 }
 
 void ModulePhysics::DrawBalls() {
