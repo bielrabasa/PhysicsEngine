@@ -18,7 +18,6 @@ Application::Application()
 	// Main Modules
 	AddModule(window);
 	AddModule(physics);
-	AddModule(renderer);
 	AddModule(textures);
 	AddModule(input);
 	AddModule(audio);
@@ -28,6 +27,9 @@ Application::Application()
 	
 	// Player
 	AddModule(player);
+
+	//Drawing
+	AddModule(renderer);
 }
 
 Application::~Application()
