@@ -2,7 +2,7 @@
 #include "Module.h"
 #include "Globals.h"
 
-#define FPS 20
+#define FPS 30
 #define GRAVITY_X 0
 #define GRAVITY_Y 10
 
@@ -38,19 +38,19 @@ public:
 		double fgy = 0;
 
 		double mass = 1;
-		double rc = 0;	//restitution coeficient
-		double dc = 0;	//drag coeficient
+		double cr = 0;	//restitution coeficient
+		double cf = 0;	//friction coeficient
 
 		bool physics_enabled = true;
 
-		Ball(double x, double y, int radius, double v, int angle, double mass, double rc) {
+		Ball(double x, double y, int radius, double v, int angle, double mass, double cr) {
 			this->x = x;
 			this->y = y;
 			this->vx = v * cos(-angle * DEGTORAD);
 			this->vy = v * sin(-angle * DEGTORAD);
 			this->mass = mass;
 			this->radius = radius;
-			this->rc = rc;
+			this->cr = cr;
 		}
 		~Ball() {
 		}
@@ -76,8 +76,8 @@ public:
 	p2List<Collider*> colliders;
 
 	//crea una bola i la posa a la llista
-	Ball* CreateBall(double x, double y, int radius, double v = 0, int angle = 0, double mass = 1, double rc = 0) {
-		Ball* b = new Ball(x, y, radius, v, angle, mass, rc);
+	Ball* CreateBall(double x, double y, int radius, double v = 0, int angle = 0, double mass = 1, double cr = 0) {
+		Ball* b = new Ball(x, y, radius, v, angle, mass, cr);
 		balls.add(b);
 		return b;
 	}

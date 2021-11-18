@@ -41,7 +41,7 @@ update_status ModulePlayer::Update()
 	}
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
 		//for(int i=0;i<100;i++)		//Prova per matar les fisiques
-		App->physics->CreateBall(x + 32, y + 32, 16, v, ang, 1);
+		App->physics->CreateBall(x + 32, y + 32, 16, v, ang, 4);
 	}
 	
 	return UPDATE_CONTINUE;
