@@ -40,12 +40,12 @@ update_status ModulePhysics::PostUpdate()
 			ComputeForces(current_ball->data);
 			NewtonsLaw(current_ball->data);
 			Integrator(current_ball->data);
-			//CollisionSolver(current_ball->data);
+			CollisionSolver(current_ball->data);
 		}
 		current_ball = current_ball->next;
 	}
 
-	DeleteBalls();
+	//DeleteBalls();
 	DrawBalls();
 	DrawColliders();
 
@@ -110,7 +110,40 @@ void ModulePhysics::CollisionSolver(Ball* ball) {
 	p2List_item<Collider*>* current_collider = colliders.getFirst();
 	while (current_collider != NULL) {
 		if (current_collider->data->rectangle) {
+			if ((ball->x + ball->radius > current_collider->data->rect.x) && 
+				(ball->x - ball->radius < current_collider->data->rect.x + current_collider->data->rect.w) && 
+				(ball->y + ball->radius > current_collider->data->rect.y) && 
+				(ball->y - ball->radius < current_collider->data->rect.y + current_collider->data->rect.h)) {
 
+				if ((ball->x + ball->radius > current_collider->data->rect.x) &&
+					(ball->x - ball->radius < current_collider->data->rect.x + current_collider->data->rect.w) &&
+					(ball->y + ball->radius - ball->vy > current_collider->data->rect.y) &&
+					(ball->y - ball->radius - ball->vy < current_collider->data->rect.y + current_collider->data->rect.h)) { //Horizontal Colision
+
+					if (ball->vx > 0) { //Floor colision
+						ball->x -= 2 * (ball->x - (current_collider->data->rect.x - ball->radius));
+					}
+					else { //Ceiling colision
+						ball->x = current_collider->data->rect.x + (-ball->x + (current_collider->data->rect.x + current_collider->data->rect.w));
+					}
+					ball->vy = ball->vy * ball->cr;
+					ball->vx = -ball->vx * ball->cr;
+				}
+				else if ((ball->x + ball->radius - ball->vx > current_collider->data->rect.x) &&
+					(ball->x - ball->radius - ball->vx < current_collider->data->rect.x + current_collider->data->rect.w) &&
+					(ball->y + ball->radius > current_collider->data->rect.y) &&
+					(ball->y - ball->radius < current_collider->data->rect.y + current_collider->data->rect.h)) { //Vertical Colision
+
+					if (ball->vy > 0) { //Floor colision
+						ball->y -= 2*(ball->y - (current_collider->data->rect.y - ball->radius));
+					}
+					else { //Ceiling colision
+						ball->y = current_collider->data->rect.y + (-ball->y + (current_collider->data->rect.y + current_collider->data->rect.h));
+					}
+					ball->vy = -ball->vy * ball->cr;
+					ball->vx = ball->vx * ball->cr;
+				}
+			}
 		}
 		else { //CIRCLE
 

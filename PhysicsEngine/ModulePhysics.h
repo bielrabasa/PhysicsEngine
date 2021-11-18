@@ -38,16 +38,16 @@ public:
 		double fgy = 0;
 
 		double mass = 1;
-		double cr = 0;	//restitution coeficient
-		double cf = 0;	//friction coeficient
+		double cr = 1;	//restitution coeficient
+		double cf = 1;	//friction coeficient
 
 		bool physics_enabled = true;
 
 		Ball(double x, double y, int radius, double v, int angle, double mass, double cr) {
 			this->x = x;
 			this->y = y;
-			this->vx = v * cos(-angle * DEGTORAD);
-			this->vy = v * sin(-angle * DEGTORAD);
+			this->vx = v * cos(double(-angle) * DEGTORAD);
+			this->vy = v * sin(double(-angle) * DEGTORAD);
 			this->mass = mass;
 			this->radius = radius;
 			this->cr = cr;
@@ -76,7 +76,7 @@ public:
 	p2List<Collider*> colliders;
 
 	//crea una bola i la posa a la llista
-	Ball* CreateBall(double x, double y, int radius, double v = 0, int angle = 0, double mass = 1, double cr = 0) {
+	Ball* CreateBall(double x, double y, int radius, double v = 0, int angle = 0, double mass = 1, double cr = 1) {
 		Ball* b = new Ball(x, y, radius, v, angle, mass, cr);
 		balls.add(b);
 		return b;
