@@ -115,6 +115,7 @@ void ModulePhysics::CollisionSolver(Ball* ball) {
 		else { //CIRCLE
 
 		}
+		current_collider = current_collider->next;
 	}
 }
 
