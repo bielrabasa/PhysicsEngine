@@ -2,7 +2,7 @@
 #include "Module.h"
 #include "Globals.h"
 
-#define FPS 30
+#define FPS 20
 #define GRAVITY_X 0
 #define GRAVITY_Y 10
 
@@ -56,9 +56,24 @@ public:
 		}
 	};
 
+	class Collider {
+	public:
+		SDL_Rect rect = { 0, 0, 0, 0 };
+		int r = 0;
+		bool rectangle = true;
+		Collider(SDL_Rect rect, int r, bool rectangle) {
+			this->rect = rect;
+			this->rectangle = rectangle;
+			this->r = r;
+		}
+		~Collider() {
+		}
+	};
+
 	float dt = 1.0f / FPS;
 
 	p2List<Ball*> balls;
+	p2List<Collider*> colliders;
 
 	//crea una bola i la posa a la llista
 	Ball* CreateBall(double x, double y, int radius, double v = 0, int angle = 0, double mass = 1, double rc = 0) {
@@ -67,9 +82,21 @@ public:
 		return b;
 	}
 
+	Collider* CreateRectangleCollider(int x, int y, int w, int h) {
+		Collider* c = new Collider({ x, y, w, h }, 0, true);
+		colliders.add(c);
+		return c;
+	}
+	Collider* CreateCircleCollider(int x, int y, int r) {
+		Collider* c = new Collider({ x, y, 0, 0 }, r, false);
+		colliders.add(c);
+		return c;
+	}
+
 private:
 	void DrawBalls();
 	void DeleteBalls();
+	void DrawColliders();
 
 	void ResetForces(Ball*);
 	void ComputeForces(Ball*);

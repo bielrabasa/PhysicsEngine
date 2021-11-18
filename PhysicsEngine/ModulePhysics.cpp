@@ -16,7 +16,6 @@ bool ModulePhysics::Start()
 {
 	LOG("Creating Physics 2D environment");
 	cannon_ball_texture = App->textures->Load("Assets/cannon_ball.png");
-
 	return true;
 }
 
@@ -28,11 +27,7 @@ update_status ModulePhysics::PreUpdate()
 
 update_status ModulePhysics::Update()
 {
-	/*
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
-		CreateBall(100, 700, 10, 100, 90, 5);
-	}
-	*/
+
 	return UPDATE_CONTINUE;
 }
 
@@ -45,13 +40,14 @@ update_status ModulePhysics::PostUpdate()
 			ComputeForces(current_ball->data);
 			NewtonsLaw(current_ball->data);
 			Integrator(current_ball->data);
-			CollisionSolver(current_ball->data);
+			//CollisionSolver(current_ball->data);
 		}
 		current_ball = current_ball->next;
 	}
 
 	DeleteBalls();
 	DrawBalls();
+	DrawColliders();
 
 	//Debug
 	if(App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
@@ -111,7 +107,15 @@ void ModulePhysics::Integrator(Ball* ball) {
 }
 
 void ModulePhysics::CollisionSolver(Ball* ball) {
+	p2List_item<Collider*>* current_collider = colliders.getFirst();
+	while (current_collider != NULL) {
+		if (current_collider->data->rectangle) {
 
+		}
+		else { //CIRCLE
+
+		}
+	}
 }
 
 void ModulePhysics::DeleteBalls() {
@@ -135,5 +139,19 @@ void ModulePhysics::DrawBalls() {
 		App->renderer->Blit(cannon_ball_texture, current_ball->data->x - 16, current_ball->data->y - 16, NULL, 2);
 		//App->renderer->DrawCircle(current_ball->data->x, current_ball->data->y, current_ball->data->radius, 250, 250, 250);
 		current_ball = current_ball->next;
+	}
+}
+
+void ModulePhysics::DrawColliders() {
+	p2List_item<Collider*>* current_collider = colliders.getFirst();
+	while (current_collider != NULL) {
+		if (current_collider->data->rectangle) { //RECTANGLE
+			App->renderer->DrawQuad(current_collider->data->rect, 100, 100, 100, 255, false);
+		}
+		else { //CIRCLE
+			App->renderer->DrawCircle(current_collider->data->rect.x, 
+				current_collider->data->rect.y, current_collider->data->r, 100, 100, 100);
+		}
+		current_collider = current_collider->next;
 	}
 }

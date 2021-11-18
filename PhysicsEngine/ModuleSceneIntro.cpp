@@ -19,6 +19,11 @@ bool ModuleSceneIntro::Start()
 	bool ret = true;
 
 	App->renderer->camera.x = App->renderer->camera.y = 0;
+	
+	//Colliders
+	App->physics->CreateRectangleCollider(0, floor, 1024, 60);
+	App->physics->CreateRectangleCollider(700, 400, 50, 300);
+	App->physics->CreateCircleCollider(725, 320, 100);
 
 	return ret;
 }
