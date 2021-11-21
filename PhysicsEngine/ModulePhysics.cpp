@@ -146,7 +146,17 @@ void ModulePhysics::CollisionSolver(Ball* ball) {
 			}
 		}
 		else { //CIRCLE
-
+			double vecX = ball->x - current_collider->data->rect.x;
+			double vecY = ball->y - current_collider->data->rect.y;
+			double distance = sqrt(vecX * vecX + vecY * vecY);
+			if (current_collider->data->r + ball->radius > distance) {	//Ball colliding ARREGLAR
+				//falta fer tp a fora
+				vecX = vecX / distance;
+				vecY = vecY / distance;
+				double aux = ball->vx;
+				ball->vx += -ball->vy * vecX * ball->cr;
+				ball->vy += aux * vecY * ball->cr;
+			}
 		}
 		current_collider = current_collider->next;
 	}
@@ -170,8 +180,8 @@ void ModulePhysics::DeleteBalls() {
 void ModulePhysics::DrawBalls() {
 	p2List_item<Ball*>* current_ball = balls.getFirst();
 	while (current_ball != NULL) {
-		App->renderer->Blit(cannon_ball_texture, current_ball->data->x - 16, current_ball->data->y - 16, NULL, 2);
-		//App->renderer->DrawCircle(current_ball->data->x, current_ball->data->y, current_ball->data->radius, 250, 250, 250);
+		//App->renderer->Blit(cannon_ball_texture, current_ball->data->x - 16, current_ball->data->y - 16, NULL, 2);
+		App->renderer->DrawCircle(current_ball->data->x, current_ball->data->y, current_ball->data->radius, 250, 250, 250);
 		current_ball = current_ball->next;
 	}
 }

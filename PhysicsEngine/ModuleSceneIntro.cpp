@@ -24,6 +24,7 @@ bool ModuleSceneIntro::Start()
 	App->physics->CreateRectangleCollider(0, floor, 1024, 60);
 	App->physics->CreateRectangleCollider(700, 400, 50, 300);
 	//App->physics->CreateCircleCollider(725, 320, 100);
+	App->physics->CreateCircleCollider(500, 500, 100);
 
 	return ret;
 }

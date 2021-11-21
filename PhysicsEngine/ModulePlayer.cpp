@@ -39,7 +39,7 @@ update_status ModulePlayer::Update()
 		if (ang < 90)
 			ang += 2;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) {
 		//for(int i=0;i<100;i++)		//Prova per matar les fisiques
 		App->physics->CreateBall(x + 32, y + 32, 16, v, ang, 4, 0.8);
 	}
