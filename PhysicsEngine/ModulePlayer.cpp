@@ -1,6 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModulePlayer.h"
+#include "SString.h"
 
 ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -43,7 +44,7 @@ update_status ModulePlayer::Update()
 		//for(int i=0;i<100;i++)		//Prova per matar les fisiques
 		App->physics->CreateBall(x + 32, y + 32, 16, v, ang, 4, 0.8);
 	}
-	
+
 	return UPDATE_CONTINUE;
 }
 
@@ -52,5 +53,8 @@ update_status ModulePlayer::PostUpdate()
 {
 	App->renderer->Blit(cannon_texture, x, y, NULL, 4, 1.0f, -ang + 90, 32, 32);
 	App->renderer->Blit(cannon_base_texture, x, y + 40, NULL, 4);
+
+	SString changing_title(TITLE "  ____  Angle: %i _ Velocity: %d", ang, v);
+	App->window->SetTitle(changing_title.GetString());
 	return UPDATE_CONTINUE;
 }
