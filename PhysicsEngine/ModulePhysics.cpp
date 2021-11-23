@@ -120,10 +120,10 @@ void ModulePhysics::CollisionSolver(Ball* ball) {
 					(ball->y + ball->radius - ball->vy > current_collider->data->rect.y) &&
 					(ball->y - ball->radius - ball->vy < current_collider->data->rect.y + current_collider->data->rect.h)) { //Horizontal Colision
 
-					if (ball->vx > 0) { //Floor colision
+					if (ball->vx > 0) { //Right colision
 						ball->x -= 2 * (ball->x - (current_collider->data->rect.x - ball->radius));
 					}
-					else { //Ceiling colision
+					else { //Left colision
 						ball->x = current_collider->data->rect.x + (-ball->x + (current_collider->data->rect.x + current_collider->data->rect.w));
 					}
 					ball->vy = ball->vy * ball->cr;
@@ -143,6 +143,17 @@ void ModulePhysics::CollisionSolver(Ball* ball) {
 					ball->vy = -ball->vy * ball->cr;
 					ball->vx = ball->vx * ball->cr;
 				}
+				else {//diagonal colision FUYM
+					if (ball->vy > 0) { //floor colision
+						ball->y = current_collider->data->rect.y - ball->radius;
+					}
+					else {	//ceiling colision
+						ball->y = current_collider->data->rect.y + current_collider->data->rect.h + ball->radius;
+					}
+
+					ball->vy = -ball->vy * ball->cr;
+					ball->vx = -ball->vx * ball->cr;
+				}
 			}
 		}
 		else { //CIRCLE
@@ -150,12 +161,19 @@ void ModulePhysics::CollisionSolver(Ball* ball) {
 			double vecY = ball->y - current_collider->data->rect.y;
 			double distance = sqrt(vecX * vecX + vecY * vecY);
 			if (current_collider->data->r + ball->radius > distance) {	//Ball colliding ARREGLAR
-				//falta fer tp a fora
+				
+				//unitary vector
 				vecX = vecX / distance;
 				vecY = vecY / distance;
-				double aux = ball->vx;
-				ball->vx += -ball->vy * vecX * ball->cr;
-				ball->vy += aux * vecY * ball->cr;
+																		
+				//tp out
+				ball->x = current_collider->data->rect.x + vecX * (current_collider->data->r + ball->radius);
+				ball->y = current_collider->data->rect.y + vecY * (current_collider->data->r + ball->radius);
+
+				//solver
+				/*double aux = ball->vx;
+				ball->vx += ball->vy * vecX * ball->cr;
+				ball->vy += -aux * vecY * ball->cr;*/
 			}
 		}
 		current_collider = current_collider->next;
