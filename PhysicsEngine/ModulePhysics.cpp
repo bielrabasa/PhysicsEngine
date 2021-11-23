@@ -172,8 +172,8 @@ void ModulePhysics::CollisionSolver(Ball* ball) {
 
 				//solver
 				/*double aux = ball->vx;
-				ball->vx += ball->vy * vecX * ball->cr;
-				ball->vy += -aux * vecY * ball->cr;*/
+				ball->vx += -ball->vy * vecX * ball->cr;
+				ball->vy += aux * vecY * ball->cr;*/
 			}
 		}
 		current_collider = current_collider->next;
