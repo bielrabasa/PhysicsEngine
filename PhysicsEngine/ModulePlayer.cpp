@@ -54,7 +54,7 @@ update_status ModulePlayer::PostUpdate()
 	App->renderer->Blit(cannon_texture, x, y, NULL, 4, 1.0f, -ang + 90, 32, 32);
 	App->renderer->Blit(cannon_base_texture, x, y + 40, NULL, 4);
 
-	SString changing_title(TITLE "  ____  Angle: %i _ Velocity: %d", ang, v);
+	SString changing_title(TITLE "  ____  Angle: %i _ Velocity: %.2lf", ang, v);
 	App->window->SetTitle(changing_title.GetString());
 	return UPDATE_CONTINUE;
 }
