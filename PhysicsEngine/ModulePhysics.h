@@ -93,6 +93,8 @@ public:
 		return c;
 	}
 
+	void DeleteAllBalls();
+
 private:
 	void DrawBalls();
 	void DeleteBalls();

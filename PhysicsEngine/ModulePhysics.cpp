@@ -124,24 +124,24 @@ void ModulePhysics::CollisionSolver(Ball* ball) {
 						ball->x -= 2 * (ball->x - (current_collider->data->rect.x - ball->radius));
 					}
 					else { //Left colision
-						ball->x = current_collider->data->rect.x + (-ball->x + (current_collider->data->rect.x + current_collider->data->rect.w));
+						ball->x += 2 * (-ball->x + (current_collider->data->rect.x + current_collider->data->rect.w + ball->radius));
 					}
 					ball->vy = ball->vy * ball->cr;
 					ball->vx = -ball->vx * ball->cr;
 				}
 				else if ((ball->x + ball->radius - ball->vx > current_collider->data->rect.x) &&
-					(ball->x - ball->radius - ball->vx < current_collider->data->rect.x + current_collider->data->rect.w) &&
-					(ball->y + ball->radius > current_collider->data->rect.y) &&
-					(ball->y - ball->radius < current_collider->data->rect.y + current_collider->data->rect.h)) { //Vertical Colision
+						(ball->x - ball->radius - ball->vx < current_collider->data->rect.x + current_collider->data->rect.w) &&
+						(ball->y + ball->radius > current_collider->data->rect.y) &&
+						(ball->y - ball->radius < current_collider->data->rect.y + current_collider->data->rect.h)) { //Vertical Colision
 
-					if (ball->vy > 0) { //Floor colision
-						ball->y -= 2*(ball->y - (current_collider->data->rect.y - ball->radius));
-					}
-					else { //Ceiling colision
-						ball->y = current_collider->data->rect.y + (-ball->y + (current_collider->data->rect.y + current_collider->data->rect.h));
-					}
-					ball->vy = -ball->vy * ball->cr;
-					ball->vx = ball->vx * ball->cr;
+						if (ball->vy > 0) { //Floor colision
+							ball->y -= 2*(ball->y - (current_collider->data->rect.y - ball->radius));
+						}
+						else { //Ceiling colision
+							ball->y = current_collider->data->rect.y + (-ball->y + (current_collider->data->rect.y + current_collider->data->rect.h));
+						}
+						ball->vy = -ball->vy * ball->cr;
+						ball->vx = ball->vx * ball->cr;
 				}
 				else {//diagonal colision FUYM
 					if (ball->vy > 0) { //floor colision
@@ -171,9 +171,12 @@ void ModulePhysics::CollisionSolver(Ball* ball) {
 				ball->y = current_collider->data->rect.y + vecY * (current_collider->data->r + ball->radius);
 
 				//solver
-				/*double aux = ball->vx;
-				ball->vx += -ball->vy * vecX * ball->cr;
-				ball->vy += aux * vecY * ball->cr;*/
+				double vector[2] = { ball->x - current_collider->data->rect.x, 
+									 ball->y - current_collider->data->rect.y };
+				double dotProduct = (ball->vx * vector[0]) + (ball->vy * vector[1]);
+				double vectorModule = sqrt((vector[0] * vector[0]) + (vector[1] * vector[1]));
+				ball->vx += -2 * (dotProduct / (vectorModule * vectorModule)) * vector[0] * ball->cr;
+				ball->vy += -2 * (dotProduct / (vectorModule * vectorModule)) * vector[1] * ball->cr;
 			}
 		}
 		current_collider = current_collider->next;
@@ -192,6 +195,16 @@ void ModulePhysics::DeleteBalls() {
 		else {
 			current_ball = current_ball->next;
 		}
+	}
+}
+
+void ModulePhysics::DeleteAllBalls() {
+	p2List_item<Ball*>* current_ball = balls.getFirst();
+	while (current_ball != NULL) {
+		Ball* b = current_ball->data;
+		current_ball = current_ball->next;
+		balls.del(balls.findNode(b));
+		delete b;
 	}
 }
 

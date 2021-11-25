@@ -44,6 +44,9 @@ update_status ModulePlayer::Update()
 		//for(int i=0;i<100;i++)		//Prova per matar les fisiques
 		App->physics->CreateBall(x + 32, y + 32, 16, v, ang, 4, 0.8);
 	}
+	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
+		App->physics->DeleteAllBalls();
+	}
 
 	return UPDATE_CONTINUE;
 }
