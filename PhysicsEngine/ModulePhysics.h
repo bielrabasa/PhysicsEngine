@@ -94,6 +94,7 @@ public:
 	}
 
 	void DeleteAllBalls();
+	void DisableEnablePhysics();
 
 private:
 	void DrawBalls();

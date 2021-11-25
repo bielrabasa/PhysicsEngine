@@ -47,6 +47,9 @@ update_status ModulePlayer::Update()
 	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
 		App->physics->DeleteAllBalls();
 	}
+	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) {
+		App->physics->DisableEnablePhysics();
+	}
 
 	return UPDATE_CONTINUE;
 }

@@ -208,6 +208,14 @@ void ModulePhysics::DeleteAllBalls() {
 	}
 }
 
+void ModulePhysics::DisableEnablePhysics() {
+	p2List_item<Ball*>* current_ball = balls.getFirst();
+	while (current_ball != NULL) {
+		current_ball->data->physics_enabled = !current_ball->data->physics_enabled;
+		current_ball = current_ball->next;
+	}
+}
+
 void ModulePhysics::DrawBalls() {
 	p2List_item<Ball*>* current_ball = balls.getFirst();
 	while (current_ball != NULL) {
